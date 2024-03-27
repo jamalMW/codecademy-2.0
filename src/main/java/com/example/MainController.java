@@ -29,8 +29,6 @@ public class MainController {
 
     @FXML
     private Button buttonCreateAccount;
-
-    private int newUser = 0;
     
     @FXML
     private Text wrongLogin;
@@ -90,7 +88,6 @@ public class MainController {
             int rowsAffected = preparedStatement.executeUpdate();
 
             if (rowsAffected > 0) {
-                newUser++;
                 loadMainMenu(enteredUsername);
             } else {
                 
@@ -102,7 +99,8 @@ public class MainController {
         }
     }
 
-    private void loadMainMenu(String username) {
+
+     private void loadMainMenu(String username) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
             Parent MainMenuRoot = loader.load();
@@ -111,9 +109,6 @@ public class MainController {
             Stage currentStage = (Stage) buttonCreateAccount.getScene().getWindow();
             currentStage.setScene(MainMenu);
             currentStage.show();
-
-            MainMenuController mainMenuController = loader.getController();
-            mainMenuController.setWelcomeMessage(newUser, username);
 
         } catch (IOException e) {
             e.printStackTrace();
