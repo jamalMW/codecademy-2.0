@@ -33,6 +33,7 @@ public class cursussenController implements Initializable {
     @FXML
     private Button homeButton;
 
+    /* 
     @FXML
     private TableView<Cursus> cursussenTableView;
 
@@ -87,6 +88,8 @@ public class cursussenController implements Initializable {
             e.printStackTrace();
         }
     }
+*/
+
 
     @FXML // Scene loader MainMenu
     private void goToMainMenuKnop(ActionEvent event) {
@@ -105,5 +108,11 @@ public class cursussenController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'initialize'");
     }
 }

@@ -9,7 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class MainMenuController {
+public class mainMenuController {
 
     @FXML //laat een welkomsttekst zien voor nieuwe gebruikers
     private Text welcomeText;
@@ -40,6 +40,8 @@ public class MainMenuController {
             e.printStackTrace();
         }
     }
+
+    /* 
 
     @FXML //sceneloader voortgang
     private void goToVoortgangKnop(ActionEvent event) {
@@ -134,6 +136,6 @@ public class MainMenuController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    } */
 }
 
