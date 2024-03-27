@@ -71,7 +71,7 @@ public class MainController {
     private void createAccount() {
         String enteredUsername = username.getText();
         String enteredPassword = password.getText();
-        String jdbcUrl = "jdbc:sqlserver://LAPTOP-I0I2L5OV:1433;databaseName=Codecademy;user=sa;password=031803;encrypt=false";
+        String jdbcUrl = "jdbc:sqlserver://192.168.2.79:1433;databaseName=Codecademy;user=sa;password=031803;encrypt=false";
         String insertQuery = "INSERT INTO UsersTable (username, password) VALUES (?, ?)";
         
         if (enteredUsername.isEmpty() || enteredPassword.isEmpty()) {
