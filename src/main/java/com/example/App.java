@@ -19,6 +19,7 @@ public class App extends Application {
         Scene scene = new Scene(root);
         primaryStage.setTitle("Jamal Mitwally-2221071 Colin Valster-2174591");
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
    

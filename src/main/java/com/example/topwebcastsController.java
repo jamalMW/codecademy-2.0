@@ -35,6 +35,8 @@ public class topwebcastsController {
         loadTopWebcastsData();
     }
 
+
+    //Deze methode vraagt de data op aan de database
     private void loadTopWebcastsData() {
         count = 0; 
         try (Connection connection = DriverManager.getConnection(JDBC_URL)) {
