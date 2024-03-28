@@ -12,7 +12,7 @@ public class mainMenuController {
     @FXML
     private void goToContentKnop(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/resources/content.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("content.fxml"));
             Parent root = loader.load();
             ((Node) event.getSource()).getScene().setRoot(root);
         } catch (IOException e) {
@@ -23,7 +23,7 @@ public class mainMenuController {
     @FXML
     private void goToCursistKnop(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/resources/cursist.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("cursist.fxml"));
             Parent root = loader.load();
             ((Node) event.getSource()).getScene().setRoot(root);
         } catch (IOException e) {
@@ -35,7 +35,7 @@ public class mainMenuController {
 
     private void goToCursussenKnop(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/resources/cursussen.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("cursussen.fxml"));
             Parent root = loader.load();
             ((Node) event.getSource()).getScene().setRoot(root);
         } catch (IOException e) {
@@ -46,7 +46,7 @@ public class mainMenuController {
     @FXML
     private void goToInschrijvingenKnop(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/resources/inschrijvingen.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("inschrijvingen.fxml"));
             Parent root = loader.load();
             ((Node) event.getSource()).getScene().setRoot(root);
         } catch (IOException e) {
@@ -57,7 +57,7 @@ public class mainMenuController {
     @FXML
     private void goToTopWebcastsKnop(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/resources/topwebcasts.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("topwebcasts.fxml"));
             Parent root = loader.load();
             ((Node) event.getSource()).getScene().setRoot(root);
         } catch (IOException e) {
@@ -68,7 +68,7 @@ public class mainMenuController {
     @FXML
     private void goToVoortgangKnop(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/resources/voortgang.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("voortgang.fxml"));
             Parent root = loader.load();
             ((Node) event.getSource()).getScene().setRoot(root);
         } catch (IOException e) {
