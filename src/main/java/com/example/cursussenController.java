@@ -55,24 +55,22 @@ public class cursussenController implements Initializable {
         onderwerpColumn.setCellValueFactory(new PropertyValueFactory<>("onderwerp"));
         introColumn.setCellValueFactory(new PropertyValueFactory<>("intro"));
         niveauColumn.setCellValueFactory(new PropertyValueFactory<>("niveau"));
-
-
         fetchDataFromDatabase();
     }
 
     private void fetchDataFromDatabase() {
-        final String JDBC_URL = "jdbc:sqlserver://LAPTOP-I0I2L5OV:1433;databaseName=Codecademy;user=sa;password=031803;encrypt=false";
+        //hier staan de waardes voor de connectie met de db
+        final String JDBC_URL = "jdbc:sqlserver://aei-sql2.avans.nl:1443;databaseName=CodeCademyGroepB3;encrypt=false;trustServerCertificate=true;";
+        final String username = "LiWaAlBa";
+        final String password = "Sout(wacht);";
 
-        try (Connection connection = DriverManager.getConnection(JDBC_URL)) {
-      
+        try (Connection connection = DriverManager.getConnection(JDBC_URL, username, password)) {
             String sql = "SELECT * FROM dbo.Cursus";
+            
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql);
                  ResultSet resultSet = preparedStatement.executeQuery()) {
-
-             
                 cursussenTableView.getItems().clear();
 
-               
                 while (resultSet.next()) {
                     cursus cursus = new cursus(
                             resultSet.getString("Naamcursus"),
@@ -88,22 +86,21 @@ public class cursussenController implements Initializable {
         }
     }
 
-    @FXML // Scene loader MainMenu
+    @FXML //Sluit de huidige stage en gaat terug naar de main menu
     private void goToMainMenuKnop(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/codecademy/MainMenu.fxml"));
-            Parent root = loader.load();
-
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.show();
-
-            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            currentStage.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage secondStage = new Stage();
+        secondStage.setTitle("Jamal Mitwally-2221071 Colin Valster-2174591");
+        secondStage.setScene(scene);
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        currentStage.close();
+        secondStage.show();
+    } 
+    catch (IOException e) {
+        e.printStackTrace();
+    }
     }
 }
