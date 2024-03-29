@@ -10,15 +10,20 @@ public class cursist {
     private String land;
     private String emailadres;
     private LocalDate geboorteDatum;
+    private String postcode;
+    private Integer huisnummer;
 
-    public cursist(String naam, LocalDate geboorteDatum, String geslacht, String adres, String woonplaats, String land, String emailadres) {
+    public cursist(String naam, LocalDate geboorteDatum, String geslacht, String adres, String woonplaats, String land, String emailadres, String postcode, Integer huisnummer) {
+
         this.naam = naam;
         this.geboorteDatum = geboorteDatum;
         this.geslacht = geslacht;
         this.adres = adres;
         this.woonplaats = woonplaats;
-        this.land =land;
+        this.land = land;
         this.emailadres = emailadres;
+        this.postcode = postcode;
+        this.huisnummer = huisnummer;
     }
 
     
@@ -49,5 +54,13 @@ public class cursist {
 
     public LocalDate getGeboorteDatum() {
         return geboorteDatum;
+    }
+
+    public String getPostcode() {
+        return postcode;
+    }
+
+    public Integer getHuisnummer() {
+        return huisnummer;
     }
 }
