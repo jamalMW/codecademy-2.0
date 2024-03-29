@@ -22,6 +22,7 @@ public class mainMenuController {
         secondStage.setScene(scene);
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentStage.close();
+        secondStage.setResizable(false);
         secondStage.show();
     } 
     catch (IOException e) {
@@ -40,6 +41,7 @@ public class mainMenuController {
         secondStage.setScene(scene);
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentStage.close();
+        secondStage.setResizable(false);
         secondStage.show();
     } 
     catch (IOException e) {
@@ -58,6 +60,7 @@ public class mainMenuController {
         secondStage.setScene(scene);
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentStage.close();
+        secondStage.setResizable(false);
         secondStage.show();
     } 
     catch (IOException e) {
@@ -76,6 +79,7 @@ public class mainMenuController {
         secondStage.setScene(scene);
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentStage.close();
+        secondStage.setResizable(false);
         secondStage.show();
     } 
     catch (IOException e) {
@@ -94,6 +98,7 @@ public class mainMenuController {
         secondStage.setScene(scene);
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentStage.close();
+        secondStage.setResizable(false);
         secondStage.show();
     } 
     catch (IOException e) {
@@ -101,10 +106,10 @@ public class mainMenuController {
     }
     }
 
-    @FXML //Sluit de huidige stage en gaat terug naar de main menu
-    private void goToMainMenuKnop(ActionEvent event) {
+    @FXML //Opent de nieuwe stage Voortgang en sluit de mainmenu stage
+    private void goToVoortgangKnop(ActionEvent event) {
     try {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("voortgang.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         Stage secondStage = new Stage();
@@ -112,6 +117,7 @@ public class mainMenuController {
         secondStage.setScene(scene);
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentStage.close();
+        secondStage.setResizable(false);
         secondStage.show();
     } 
     catch (IOException e) {

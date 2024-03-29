@@ -25,6 +25,7 @@ public class inschrijvingenController {
         secondStage.setScene(scene);
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentStage.close();
+        secondStage.setResizable(false);
         secondStage.show();
     } 
     catch (IOException e) {

@@ -41,7 +41,6 @@ public class topwebcastsController {
 
     //Deze methode vraagt de data op aan de database
     private void loadTopWebcastsData() {
-        count = 0; 
         try (Connection connection = DriverManager.getConnection(JDBC_URL, username, password)) {
             //SQL Query om de waardes uit de kolommen titel, naamspreker en views te pakken uit de bovenste 3 records, georderd op views.
             String sql = "SELECT TOP 3 titel, naamSpreker, views FROM Webcast ORDER BY Views DESC";
@@ -53,8 +52,8 @@ public class topwebcastsController {
                 while (resultSet.next() && count < topWebcastTexts.length) {
                     String titel = resultSet.getString("titel");
                     String speaker = resultSet.getString("naamSpreker");
-                    String duration = resultSet.getString("views");
-                    setTextForTopWebcast(topWebcastTexts[count], titel, speaker, duration);
+                    String views = resultSet.getString("views");
+                    setTextForTopWebcast(topWebcastTexts[count], titel, speaker, views);
                     count++;
                 }
             }
@@ -66,9 +65,9 @@ public class topwebcastsController {
 
 
     //Plaatst de tekst op het scherm met de verkregen data
-    private void setTextForTopWebcast(Text webcastText, String titel, String speaker, String duration) {
-        webcastText.setText(String.format("%d.    %s by %s (%s minutes)", 
-        count + 1, titel, speaker, duration));
+    private void setTextForTopWebcast(Text webcastText, String titel, String speaker, String views) {
+        webcastText.setText(String.format("%d.    %s by %s (%s views)", 
+        count + 1, titel, speaker, views));
     }
     
 
@@ -83,6 +82,7 @@ public class topwebcastsController {
         secondStage.setScene(scene);
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentStage.close();
+        secondStage.setResizable(false);
         secondStage.show();
     } 
     catch (IOException e) {

@@ -14,19 +14,19 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cursistController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cursistController">
     <children>
         <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="15.0">
             <image>
-                <Image url="logo.png" />
+                <Image url="@logo.png" />
             </image>
         </ImageView>
-        <Text layoutX="373.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cursist" textAlignment="CENTER" wrappingWidth="116.93072509765625" AnchorPane.leftAnchor="373.0" AnchorPane.rightAnchor="386.20000000000005">
+        <Text layoutX="342.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cursist" textAlignment="CENTER" wrappingWidth="116.93072509765625" AnchorPane.leftAnchor="342.0" AnchorPane.rightAnchor="341.06927490234375">
             <font>
                 <Font name="Arial Bold" size="30.0" />
             </font>
         </Text>
-        <TableView fx:id="table" layoutX="39.0" layoutY="150.0" prefHeight="300.0" prefWidth="784.0">
+        <TableView fx:id="table" layoutX="8.0" layoutY="150.0" prefHeight="300.0" prefWidth="784.0" AnchorPane.topAnchor="120.0">
             <columns>
                 <TableColumn fx:id="naamColumn" prefWidth="112.0000228881836" text="Naam" />
                 <TableColumn fx:id="geboorteDatumColumn" prefWidth="112.79998779296875" text="Geboortedatum" />
@@ -40,7 +40,7 @@
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
             </columnResizePolicy>
         </TableView>
-        <HBox layoutX="40.0" layoutY="502.0" prefHeight="66.0" prefWidth="784.0">
+        <HBox layoutX="14.0" layoutY="502.0" prefHeight="66.0" prefWidth="784.0">
             <children>
                 <Button onAction="#addButton" prefWidth="40.0" text="Add" />
                 <Button onAction="#updateButton" text="Update" />
@@ -52,7 +52,7 @@
             </Text>
             </children>
         </HBox>
-        <HBox layoutX="39.0" layoutY="450.0" prefHeight="26.0" prefWidth="784.0">
+        <HBox layoutX="14.0" layoutY="450.0" prefHeight="26.0" prefWidth="784.0">
             <children>
                 <TextField fx:id="naamTextField" layoutX="50.0" prefHeight="26.0" prefWidth="126.0" promptText="Naam" />
             <DatePicker fx:id="geboorteDatumPicker" editable="false" prefHeight="26.0" prefWidth="127.0" />
@@ -63,11 +63,13 @@
             <TextField fx:id="emailadresTextField" prefHeight="26.0" prefWidth="156.0" promptText="emailadres" />
             </children>
         </HBox>
-      <ImageView fitHeight="43.0" fitWidth="39.0" layoutX="795.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="home.png" />
-         </image>
-      </ImageView>
-      <Button layoutX="795.0" layoutY="28.0" mnemonicParsing="false" onAction="#goToMainMenuKnop" opacity="0.0" prefHeight="40.0" prefWidth="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="28.0" />
+      <Button layoutX="795.0" layoutY="28.0" mnemonicParsing="false" onAction="#goToMainMenuKnop" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="15.0">
+         <graphic>
+            <ImageView fitHeight="45.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@home.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
     </children>
 </AnchorPane>

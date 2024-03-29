@@ -11,31 +11,33 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.contentController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.contentController">
     <children>
         <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="15.0">
             <image>
                 <Image url="@logo.png" />
             </image>
         </ImageView>
-        <Text layoutX="373.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Content" textAlignment="CENTER" wrappingWidth="116.93072509765625" AnchorPane.leftAnchor="373.0" AnchorPane.rightAnchor="386.20000000000005">
+        <Text layoutX="342.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Content" textAlignment="CENTER" wrappingWidth="116.93072509765625" AnchorPane.leftAnchor="342.0" AnchorPane.rightAnchor="341.06927490234375">
             <font>
                 <Font name="Arial Bold" size="30.0" />
             </font>
         </Text>
-        <ImageView fitHeight="43.0" fitWidth="39.0" layoutX="795.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@home.png" />
-            </image>
-        </ImageView>
-        <Button layoutX="795.0" layoutY="28.0" mnemonicParsing="false" onAction="#goToMainMenuKnop" opacity="0.0" prefHeight="40.0" prefWidth="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="28.0" />
-      <TabPane layoutX="-1.0" layoutY="116.0" prefHeight="486.0" prefWidth="876.0" tabClosingPolicy="UNAVAILABLE">
+        <Button layoutX="795.0" layoutY="28.0" mnemonicParsing="false" onAction="#goToMainMenuKnop" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="15.0">
+         <graphic>
+              <ImageView fitHeight="45.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                      <Image url="@home.png" />
+                  </image>
+              </ImageView>
+         </graphic></Button>
+      <TabPane layoutX="40.0" layoutY="119.0" prefHeight="383.0" prefWidth="721.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.topAnchor="120.0">
         <tabs>
           <Tab text="Webcasts">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView prefHeight="461.0" prefWidth="883.0">
+                        <TableView prefHeight="355.0" prefWidth="721.0">
                           <columns>
                             <TableColumn prefWidth="75.0" text="C1" />
                             <TableColumn prefWidth="75.0" text="C2" />
@@ -49,7 +51,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView layoutX="-1.0" layoutY="-2.0" prefHeight="459.0" prefWidth="885.0">
+                        <TableView layoutX="-1.0" layoutY="-2.0" prefHeight="356.0" prefWidth="721.0">
                           <columns>
                             <TableColumn prefWidth="75.0" text="C1" />
                             <TableColumn prefWidth="75.0" text="C2" />
