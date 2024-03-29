@@ -61,14 +61,14 @@ public class inschrijvingenController {
 
     @FXML
     public void initialize() {
-        cursus.getItems().addAll("Duurzame Ontwikkeling", "Programmeren 2", "Relationele Databases 1"); // Add your courses here
+        cursus.getItems().addAll("Duurzame Ontwikkeling", "Programmeren 2", "Relationele Databases 1"); 
         initTable();
         refreshTable();
     }
 
     private void initTable() {
         emailadresColumn.setCellValueFactory(new PropertyValueFactory<>("emailadres"));
-        cursusColumn.setCellValueFactory(new PropertyValueFactory<>("naamCursus")); // Update this line
+        cursusColumn.setCellValueFactory(new PropertyValueFactory<>("naamCursus"));
         datumColumn.setCellValueFactory(new PropertyValueFactory<>("datum"));
     }
 
@@ -99,7 +99,7 @@ public class inschrijvingenController {
     @FXML
     void addButton(ActionEvent event) {
         System.out.println("add");
-        String email = emailadres.getText().trim(); // Trim to remove leading and trailing whitespace
+        String email = emailadres.getText().trim();
         if (email.isEmpty()) {
         showAlert(ERROR_ALERT, "Validation Error", "E-mailadres mag niet leeg zijn.");
         return;
@@ -177,7 +177,7 @@ public class inschrijvingenController {
         return;
     }
     System.out.println("add");
-    String email = emailadres.getText().trim(); // Trim to remove leading and trailing whitespace
+    String email = emailadres.getText().trim();
     if (email.isEmpty()) {
     showAlert(ERROR_ALERT, "Validation Error", "E-mailadres mag niet leeg zijn.");
     return;
@@ -195,12 +195,11 @@ LocalDate selectedDate = datum.getValue();
     return;
 }
     
-    // Get the new values from the input fields
     String newEmail = emailadres.getText();
     String newCursus = cursus.getValue();
     LocalDate newDatum = datum.getValue();
     
-    // Update the selected item with the new values
+
     try (Connection connection = getConnection();
          PreparedStatement statement = connection.prepareStatement("UPDATE inschrijving SET emailadres=?, naamCursus=?, datum=? WHERE emailadres=? AND naamCursus=? AND datum=?")) {
         statement.setString(1, newEmail);
@@ -223,7 +222,6 @@ LocalDate selectedDate = datum.getValue();
         }
     }
     }
-
 
     @FXML
     private void selectButton(ActionEvent event) {

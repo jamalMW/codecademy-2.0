@@ -26,26 +26,21 @@ public class contentController {
     @FXML
     private TableView<ObservableList<String>> moduleTableView;
 
-    // JDBC URL and credentials
+    // JDBC URL and inlog
     private static final String JDBC_URL = "jdbc:sqlserver://aei-sql2.avans.nl:1443;databaseName=CodeCademyGroepB3;encrypt=false;trustServerCertificate=true;";
     private static final String USERNAME = "LiWaAlBa";
     private static final String PASSWORD = "Sout(wacht);";
 
-    // Method to initialize the controller
     public void initialize() {
-        // Populate the TableViews
         populateWebcastTable();
         populateModuleTable();
     }
 
-    // Method to populate the Webcast TableView
     private void populateWebcastTable() {
         try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD)) {
             String sql = "SELECT * FROM Webcast";
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
-    
-            // Clear existing columns to avoid duplication
             webcastTableView.getColumns().clear();
     
             int numColumns = resultSet.getMetaData().getColumnCount();
@@ -55,8 +50,7 @@ public class contentController {
                 column.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().get(j)));
                 webcastTableView.getColumns().add(column);
             }
-    
-            // Populate the table with data
+
             while (resultSet.next()) {
                 ObservableList<String> row = FXCollections.observableArrayList();
                 for (int i = 1; i <= numColumns; i++) {
@@ -75,8 +69,6 @@ public class contentController {
             String sql = "SELECT * FROM Module";
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
-    
-            // Clear existing columns to avoid duplication
             moduleTableView.getColumns().clear();
     
             int numColumns = resultSet.getMetaData().getColumnCount();
@@ -87,7 +79,6 @@ public class contentController {
                 moduleTableView.getColumns().add(column);
             }
     
-            // Populate the table with data
             while (resultSet.next()) {
                 ObservableList<String> row = FXCollections.observableArrayList();
                 for (int i = 1; i <= numColumns; i++) {

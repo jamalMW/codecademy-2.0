@@ -38,9 +38,16 @@ public class topwebcastsController {
         loadTopWebcastsData();
     }
 
+    //setconnection en gettopwebcaststexts is voor de unittests
+    public void setConnection(@SuppressWarnings("exports") Connection connection) {
+    }
 
+    @SuppressWarnings("exports")
+    public Text[] getTopWebcastTexts() {
+        return topWebcastTexts;
+    }
     //Deze methode vraagt de data op aan de database
-    private void loadTopWebcastsData() {
+    void loadTopWebcastsData() {
         try (Connection connection = DriverManager.getConnection(JDBC_URL, username, password)) {
             //SQL Query om de waardes uit de kolommen titel, naamspreker en views te pakken uit de bovenste 3 records, georderd op views.
             String sql = "SELECT TOP 3 titel, naamSpreker, views FROM Webcast ORDER BY Views DESC";
