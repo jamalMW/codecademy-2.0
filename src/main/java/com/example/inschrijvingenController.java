@@ -1,4 +1,5 @@
 package com.example;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -90,13 +91,31 @@ public class inschrijvingenController {
                 inschrijvingen.add(i);
             }
         } catch (SQLException e) {
-            showAlert(ERROR_ALERT, "Database Error", e.getMessage());
+            showAlert(ERROR_ALERT, "Error", e.getMessage());
         }
         return inschrijvingen;
     }
 
     @FXML
     void addButton(ActionEvent event) {
+        System.out.println("add");
+        String email = emailadres.getText().trim(); // Trim to remove leading and trailing whitespace
+        if (email.isEmpty()) {
+        showAlert(ERROR_ALERT, "Validation Error", "E-mailadres mag niet leeg zijn.");
+        return;
+    }
+
+    String selectedCursus = cursus.getValue();
+    if (selectedCursus == null || selectedCursus.isEmpty()) {
+        showAlert(ERROR_ALERT, "Validation Error", "Selecteer een cursus.");
+        return;
+    }
+
+    LocalDate selectedDate = datum.getValue();
+        if (selectedDate == null) {
+        showAlert(ERROR_ALERT, "Validation Error", "Datum mag niet leeg zijn");
+        return;
+    }
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement("INSERT INTO inschrijving (emailadres, naamCursus, datum) VALUES (?, ?, ?)")) {
             statement.setString(1, emailadres.getText());
@@ -109,12 +128,17 @@ public class inschrijvingenController {
                 refreshTable();
             }
         } catch (SQLException e) {
-            showAlert(ERROR_ALERT, "Database Error", e.getMessage());
+            if (e.getMessage().contains("FOREIGN KEY constraint")) {
+                showAlert(ERROR_ALERT, "Error", "Deze cursist is niet bij ons bekend, maak deze cursist eerst aan");
+            } else {
+                showAlert(ERROR_ALERT, "Error", e.getMessage());
+            }
         }
     }
 
     @FXML
     void deleteButton(ActionEvent event) {
+        System.out.println("delete");
         inschrijving selectedInschrijving = table.getSelectionModel().getSelectedItem();
         if (selectedInschrijving == null) {
             showAlert(ERROR_ALERT, "Selecteer een inschrijving", "Selecteer een inschrijving om te verwijderen.");
@@ -132,7 +156,7 @@ public class inschrijvingenController {
                 refreshTable();
             }
         } catch (SQLException e) {
-            showAlert(ERROR_ALERT, "Database Error", e.getMessage());
+            showAlert(ERROR_ALERT, "Error", e.getMessage());
         }
     }
 
@@ -146,11 +170,30 @@ public class inschrijvingenController {
     
     @FXML
     void updateButton(ActionEvent event) {
+        System.out.println("update");
     inschrijving selectedInschrijving = table.getSelectionModel().getSelectedItem();
     if (selectedInschrijving == null) {
         showAlert(ERROR_ALERT, "Selecteer een inschrijving", "Selecteer een inschrijving om te bijwerken.");
         return;
     }
+    System.out.println("add");
+    String email = emailadres.getText().trim(); // Trim to remove leading and trailing whitespace
+    if (email.isEmpty()) {
+    showAlert(ERROR_ALERT, "Validation Error", "E-mailadres mag niet leeg zijn.");
+    return;
+    }
+
+    String selectedCursus = cursus.getValue();
+    if (selectedCursus == null || selectedCursus.isEmpty()) {
+    showAlert(ERROR_ALERT, "Validation Error", "Selecteer een cursus.");
+    return;
+    }
+
+LocalDate selectedDate = datum.getValue();
+    if (selectedDate == null) {
+    showAlert(ERROR_ALERT, "Validation Error", "Datum mag niet leeg zijn");
+    return;
+}
     
     // Get the new values from the input fields
     String newEmail = emailadres.getText();
@@ -173,13 +216,18 @@ public class inschrijvingenController {
             refreshTable();
         }
     } catch (SQLException e) {
-        showAlert(ERROR_ALERT, "Database Error", e.getMessage());
+        if (e.getMessage().contains("FOREIGN KEY constraint")) {
+            showAlert(ERROR_ALERT, "Error", "Deze cursist is niet bij ons bekend, maak deze cursist eerst aan");
+        } else {
+            showAlert(ERROR_ALERT, "Error", e.getMessage());
+        }
     }
     }
 
 
     @FXML
     private void selectButton(ActionEvent event) {
+        System.out.println("select");
     inschrijving selectedInschrijving = table.getSelectionModel().getSelectedItem();
     if (selectedInschrijving == null) {
         showAlert(ERROR_ALERT, "Selecteer een inschrijving", "Selecteer een inschrijving om te bewerken.");

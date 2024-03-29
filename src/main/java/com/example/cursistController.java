@@ -1,5 +1,6 @@
 package com.example;
-
+import org.junit.Test;
+import org.junit.Assert;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -66,7 +67,7 @@ public class cursistController {
     private TextField woonplaats;
     @FXML
     private TableColumn<cursist, String> woonplaatsColumn;
-
+    //Inloginformatie voor db connectie
     private static final String JDBC_URL = "jdbc:sqlserver://aei-sql2.avans.nl:1443;databaseName=CodeCademyGroepB3;encrypt=false;trustServerCertificate=true;";
     private static final String USERNAME = "LiWaAlBa";
     private static final String PASSWORD = "Sout(wacht);";
@@ -74,6 +75,7 @@ public class cursistController {
     private static final Alert.AlertType ERROR_ALERT = Alert.AlertType.ERROR;
     private static final Alert.AlertType INFO_ALERT = Alert.AlertType.INFORMATION;
 
+    //string die aangeeft welke karakters wanneer gebruikt mogen worden voor de email
     private static final String emailValidatie = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
     private static final Pattern pattern = Pattern.compile(emailValidatie);
     
@@ -82,6 +84,7 @@ public class cursistController {
         return DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
     }
 
+    //vult de opties in de choicebox in
     @FXML
     public void initialize() {
         geslacht.getItems().addAll("Man", "Vrouw");
@@ -89,6 +92,7 @@ public class cursistController {
         refreshTable();
     }
 
+    //linkt de tabelkolommen met de database
     private void initTable() {
         naamColumn.setCellValueFactory(new PropertyValueFactory<>("naam"));
         geboorteDatumColumn.setCellValueFactory(new PropertyValueFactory<>("geboorteDatum"));
@@ -101,11 +105,13 @@ public class cursistController {
         huisnummerColumn.setCellValueFactory(new PropertyValueFactory<>("huisnummer"));
     }
 
+    //klasse om de tabel te refreshen, wordt gecalled na alle CRUD opties
     private void refreshTable() {
         table.getItems().clear();
         table.getItems().addAll(getCursistList());
     }
 
+    //vult de tabel in met de records van de database
     private List<cursist> getCursistList() {
         List<cursist> cursists = new ArrayList<>();
         try (Connection connection = getConnection();
@@ -131,6 +137,7 @@ public class cursistController {
         return cursists;
     }
 
+    //voegt een cursist toe en handeld errors
     @FXML
     void addButton(ActionEvent event) {
         if (!validateFields()) {
@@ -158,7 +165,7 @@ public class cursistController {
         }
     }
 
-
+    //update een geselecteerde cursist en handeld errors
     @FXML
     void updateButton(ActionEvent event) {
         cursist selectedCursist = table.getSelectionModel().getSelectedItem();
@@ -192,6 +199,7 @@ public class cursistController {
         }
     }
 
+    //delete een geselecteerde cursist en handeld errors
     @FXML
     void deleteButton(ActionEvent event) {
         cursist selectedCursist = table.getSelectionModel().getSelectedItem();
@@ -212,7 +220,7 @@ public class cursistController {
             showAlert(ERROR_ALERT, "Database Error", e.getMessage());
         }
     }
-
+    //kijkt of de velden leeg zijn, deze klasse wordt gecalled voor een update of add
     private boolean validateFields() {
         if (naam.getText().isEmpty() || datum.getValue() == null || geslacht.getValue() == null
                 || adres.getText().isEmpty() || woonplaats.getText().isEmpty()
@@ -221,7 +229,7 @@ public class cursistController {
             return false;
         }
 
-        // Validate email format
+        // Valideerd het email-adres met de het patroon voor de email bovenaan
         String email = emailadres.getText();
         Matcher matcher = pattern.matcher(email);
         if (!matcher.matches()) {
@@ -232,6 +240,7 @@ public class cursistController {
         return true;
     }
 
+    //deze klasse zorgt voor popups zodat je weet wat er wanneer gebeurt
     private void showAlert(Alert.AlertType alertType, String title, String content) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -240,6 +249,7 @@ public class cursistController {
         alert.showAndWait();
     }
 
+    //pakt de data uit een tableview record en zet het in de textfields zodat je makkelijker een record kan bewerken
     @FXML
     private void selectButton(ActionEvent event) {
         cursist selectedCursist = table.getSelectionModel().getSelectedItem();
@@ -248,7 +258,6 @@ public class cursistController {
             return;
         }
         
-        // Populate input fields with selected cursist's data
         naam.setText(selectedCursist.getNaam());
         datum.setValue(selectedCursist.getGeboorteDatum());
         geslacht.setValue(selectedCursist.getGeslacht());

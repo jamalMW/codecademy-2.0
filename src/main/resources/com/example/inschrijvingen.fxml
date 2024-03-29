@@ -29,7 +29,7 @@
                 <Font name="Arial Bold" size="30.0" />
             </font>
         </Text>
-        <HBox layoutX="45.0" layoutY="220.0" prefHeight="348.0" prefWidth="198.0">
+        <HBox layoutX="45.0" layoutY="209.0" prefHeight="359.0" prefWidth="198.0">
             <children>
                 <Button onAction="#addButton" prefWidth="40.0" text="Add" />
                 <Button onAction="#updateButton" text="Update" />
@@ -45,7 +45,7 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <VBox layoutX="45.0" layoutY="100.0" prefHeight="196.0" prefWidth="100.0">
+      <VBox layoutX="45.0" layoutY="100.0" prefHeight="95.0" prefWidth="100.0">
          <children>
             <Label text="E-mailadres">
                <VBox.margin>
@@ -64,7 +64,7 @@
             </Label>
          </children>
       </VBox>
-      <VBox layoutX="145.0" layoutY="100.0" prefHeight="348.0" prefWidth="100.0">
+      <VBox layoutX="145.0" layoutY="100.0" prefHeight="95.0" prefWidth="100.0">
          <children>
                 <TextField fx:id="emailadres" prefHeight="26.0" prefWidth="126.0">
                <VBox.margin>
