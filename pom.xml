@@ -25,7 +25,6 @@
             <artifactId>mssql-jdbc</artifactId>
             <version>12.6.1.jre11</version>
         </dependency>
-
     </dependencies>
     <build>
         <plugins>
