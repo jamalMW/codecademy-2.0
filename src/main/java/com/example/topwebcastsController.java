@@ -64,7 +64,7 @@ public class topwebcastsController {
     }
 
 
-    //Plaatst de tekst op het scherm met de verkregen data
+    //Plaatst de tekst op het scherm met de verkregen data en zet de nummering
     private void setTextForTopWebcast(Text webcastText, String titel, String speaker, String views) {
         webcastText.setText(String.format("%d.    %s by %s (%s views)", 
         count + 1, titel, speaker, views));

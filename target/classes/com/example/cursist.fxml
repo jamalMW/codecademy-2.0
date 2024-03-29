@@ -26,7 +26,7 @@
                 <Font name="Arial Bold" size="30.0" />
             </font>
         </Text>
-        <TableView fx:id="table" layoutX="8.0" layoutY="150.0" prefHeight="300.0" prefWidth="784.0" AnchorPane.topAnchor="120.0">
+        <TableView fx:id="table" layoutX="46.0" layoutY="96.0" prefHeight="380.0" prefWidth="720.0" AnchorPane.topAnchor="96.0">
             <columns>
                 <TableColumn fx:id="naamColumn" prefWidth="112.0000228881836" text="Naam" />
                 <TableColumn fx:id="geboorteDatumColumn" prefWidth="112.79998779296875" text="Geboortedatum" />
@@ -40,7 +40,7 @@
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
             </columnResizePolicy>
         </TableView>
-        <HBox layoutX="14.0" layoutY="502.0" prefHeight="66.0" prefWidth="784.0">
+        <HBox layoutX="45.0" layoutY="476.0" prefHeight="92.0" prefWidth="753.0">
             <children>
                 <Button onAction="#addButton" prefWidth="40.0" text="Add" />
                 <Button onAction="#updateButton" text="Update" />
@@ -52,7 +52,7 @@
             </Text>
             </children>
         </HBox>
-        <HBox layoutX="14.0" layoutY="450.0" prefHeight="26.0" prefWidth="784.0">
+        <HBox layoutX="45.0" layoutY="450.0" prefHeight="26.0" prefWidth="720.0">
             <children>
                 <TextField fx:id="naamTextField" layoutX="50.0" prefHeight="26.0" prefWidth="126.0" promptText="Naam" />
             <DatePicker fx:id="geboorteDatumPicker" editable="false" prefHeight="26.0" prefWidth="127.0" />

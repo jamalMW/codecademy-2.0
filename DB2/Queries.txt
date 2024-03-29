@@ -24,3 +24,11 @@ insert into voortgang
 values ('bashuis@hotmail.nl', 'Programmeren 2', 1, 70),('bashuis@hotmail.nl', 'Duurzame Ontwikkeling', 2, 30),('bashuis@hotmail.nl', 'Relationele Databases 1', 3, 100)
 insert into webcast
 values (2, 'Duurzaamheid Webcast', 150, '2023-10-21', 'avans.nl/duurzaam/webcast', 'Jan Vertonghen', 'Avans', 700), (4, 'Codecademy Webcast', 80, '2023-10-21', 'avans.nl/programmeren2/webcastcodecademy', 'Kevin-Jan', 'Avans', 1200), (5, 'Programmeren Tentamen Voorbereiding Webcast', 110, '2023-10-21',  'avans.nl/programmeren2/webcastprogrammeren', 'Marjolein Gerdes', 'Avans', 1900), (6, 'Databases Tentamen Voorbereiding Webcast', 160, '2023-10-21',  'avans.nl/programmeren2/webcastdatabases', 'Erik Kuipers', 'Avans', 1500), (7, 'Duurzaamheid Tentamen Voorbereiding Webcast', 200, '2023-10-21',  'avans.nl/programmeren2/webcastduurzaamheid', 'Jan Duurzaam', 'Avans', 900)
+
+//voegt hier de beschrijving toe aan ook de module
+update module set beschrijving = 'Hier leer je over de Codecademy groepsopdracht' where contentID = 1
+update module set beschrijving = 'Hier leer je hoe je gebruik kan maken van SQL Server Management Studio' where contentID = 3
+
+//voegt status toe bij webcast en module
+update webcast set status = 'gearchiveerd' where 
+update module set status = 'gearchiveerd'
