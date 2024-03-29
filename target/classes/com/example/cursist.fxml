@@ -116,7 +116,7 @@
                <VBox.margin>
                   <Insets bottom="5.0" />
                </VBox.margin></TextField>
-            <DatePicker fx:id="datum">
+            <DatePicker fx:id="datum" editable="false">
                <VBox.margin>
                   <Insets bottom="5.0" />
                </VBox.margin>

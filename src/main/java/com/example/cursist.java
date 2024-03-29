@@ -1,62 +1,53 @@
 package com.example;
 
 import java.time.LocalDate;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.fxml.FXML;
 
 public class cursist {
-    private StringProperty naam;
-    private ObjectProperty<LocalDate> geboorteDatum;
-    private StringProperty geslacht;
-    private StringProperty adres;
-    private StringProperty woonplaats;
-    private StringProperty land;
-    private StringProperty emailadres;
+    private String naam;
+    private String geslacht;
+    private String adres;
+    private String woonplaats;
+    private String land;
+    private String emailadres;
+    private LocalDate geboorteDatum;
 
     public cursist(String naam, LocalDate geboorteDatum, String geslacht, String adres, String woonplaats, String land, String emailadres) {
-        this.naam = new SimpleStringProperty(naam);
-        this.geboorteDatum = new SimpleObjectProperty<>(geboorteDatum);
-        this.geslacht = new SimpleStringProperty(geslacht);
-        this.adres = new SimpleStringProperty(adres);
-        this.woonplaats = new SimpleStringProperty(woonplaats);
-        this.land = new SimpleStringProperty(land);
-        this.emailadres = new SimpleStringProperty(emailadres);
-        
+        this.naam = naam;
+        this.geboorteDatum = geboorteDatum;
+        this.geslacht = geslacht;
+        this.adres = adres;
+        this.woonplaats = woonplaats;
+        this.land =land;
+        this.emailadres = emailadres;
     }
 
-    public StringProperty naamProperty() {
+    
+
+    public String getNaam() {
         return naam;
     }
 
-    public ObjectProperty<LocalDate> geboorteDatumProperty() {
-        return geboorteDatum;
-    }
-
-    public StringProperty geslachtProperty() {
+    public String getGeslacht() {
         return geslacht;
     }
 
-    public StringProperty adresProperty() {
+    public String getAdres() {
         return adres;
     }
 
-    public StringProperty woonplaatsProperty() {
+    public String getWoonplaats() {
         return woonplaats;
     }
 
-    public StringProperty landProperty() {
+    public String getLand() {
         return land;
     }
 
-      public StringProperty emailadresProperty() {
+    public String getEmailadres() {
         return emailadres;
     }
 
-    @FXML
-    public String getNaam() {
-        return naam.get();
+    public LocalDate getGeboorteDatum() {
+        return geboorteDatum;
     }
 }

@@ -1,233 +1,235 @@
 package com.example;
-
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.sql.*;
-import java.time.LocalDate;
 
 public class cursistController {
 
     @FXML
-    private TextField naamTextField;
-    @FXML
-    private DatePicker geboorteDatumPicker;
-    @FXML
-    private ChoiceBox<String> geslachtChoiceBox;
-    @FXML
-    private TextField adresTextField;
-    @FXML
-    private TextField woonplaatsTextField;
-    @FXML
-    private TextField landTextField;
-    @FXML
-    private TextField emailadresTextField;
-    @FXML
-    private TableView<cursist> table;
-    @FXML
-    private TableColumn<cursist, String> naamColumn;
-    @FXML
-    private TableColumn<cursist, LocalDate> geboorteDatumColumn;
-    @FXML
-    private TableColumn<cursist, String> geslachtColumn;
+    private TextField adres;
     @FXML
     private TableColumn<cursist, String> adresColumn;
     @FXML
-    private TableColumn<cursist, String> woonplaatsColumn;
+    private DatePicker datum;
     @FXML
-    private TableColumn<cursist, String> landColumn;
+    private TextField emailadres;
     @FXML
     private TableColumn<cursist, String> emailadresColumn;
     @FXML
-    private Text warning;
+    private TableColumn<cursist, LocalDate> geboorteDatumColumn;
+    @FXML
+    private ChoiceBox<String> geslacht;
+    @FXML
+    private TableColumn<cursist, String> geslachtColumn;
+    @FXML
+    private TextField huisnummer;
+    @FXML
+    private TextField land;
+    @FXML
+    private TableColumn<cursist, String> landColumn;
+    @FXML
+    private TextField naam;
+    @FXML
+    private TableColumn<cursist, String> naamColumn;
+    @FXML
+    private TextField postcode;
+    @FXML
+    private TableView<cursist> table;
+    @FXML
+    private TextField woonplaats;
+    @FXML
+    private TableColumn<cursist, String> woonplaatsColumn;
 
-    private static final String JDBC_URL = "jdbc:sqlserver://LAPTOP-I0I2L5OV:1433;databaseName=Codecademy;user=sa;password=031803;encrypt=false";
+    private static final String JDBC_URL = "jdbc:sqlserver://aei-sql2.avans.nl:1443;databaseName=CodeCademyGroepB3;encrypt=false;trustServerCertificate=true;";
+    private static final String USERNAME = "LiWaAlBa";
+    private static final String PASSWORD = "Sout(wacht);";
 
-    @FXML //sceneloader MainMenu
+    private static final Alert.AlertType ERROR_ALERT = Alert.AlertType.ERROR;
+    private static final Alert.AlertType INFO_ALERT = Alert.AlertType.INFORMATION;
+    
+    @SuppressWarnings("exports")
+    public Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+    }
+    @FXML
+    public void initialize() {
+        geslacht.getItems().addAll("Man", "Vrouw");
+        initTable();
+        refreshTable();
+    }
+
+    private void initTable() {
+        naamColumn.setCellValueFactory(new PropertyValueFactory<>("naam"));
+        geboorteDatumColumn.setCellValueFactory(new PropertyValueFactory<>("geboorteDatum"));
+        geslachtColumn.setCellValueFactory(new PropertyValueFactory<>("geslacht"));
+        adresColumn.setCellValueFactory(new PropertyValueFactory<>("adres"));
+        woonplaatsColumn.setCellValueFactory(new PropertyValueFactory<>("woonplaats"));
+        landColumn.setCellValueFactory(new PropertyValueFactory<>("land"));
+        emailadresColumn.setCellValueFactory(new PropertyValueFactory<>("emailadres"));
+    }
+
+    private void refreshTable() {
+        table.getItems().clear();
+        table.getItems().addAll(getCursistList());
+    }
+
+    private List<cursist> getCursistList() {
+        List<cursist> cursists = new ArrayList<>();
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM cursist");
+             ResultSet resultSet = statement.executeQuery()) {
+            while (resultSet.next()) {
+                cursist c = new cursist(
+                        resultSet.getString("naam"),
+                        resultSet.getDate("geboortedatum").toLocalDate(),
+                        resultSet.getString("geslacht"),
+                        resultSet.getString("adres"),
+                        resultSet.getString("woonplaats"),
+                        resultSet.getString("land"),
+                        resultSet.getString("emailadres")
+                );
+                cursists.add(c);
+            }
+        } catch (SQLException e) {
+            showAlert(ERROR_ALERT, "Database Error", e.getMessage());
+        }
+        return cursists;
+    }
+
+    @FXML
+    void addButton(ActionEvent event) {
+        if (!validateFields()) {
+            return;
+        }
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement("INSERT INTO cursist (naam, geboortedatum, geslacht, adres, woonplaats, land, emailadres) VALUES (?, ?, ?, ?, ?, ?, ?)")) {
+            statement.setString(1, naam.getText());
+            statement.setDate(2, java.sql.Date.valueOf(datum.getValue()));
+            statement.setString(3, geslacht.getValue());
+            statement.setString(4, adres.getText());
+            statement.setString(5, woonplaats.getText());
+            statement.setString(6, land.getText());
+            statement.setString(7, emailadres.getText());
+
+            int rowsInserted = statement.executeUpdate();
+            if (rowsInserted > 0) {
+                showAlert(INFO_ALERT, "Success", "Cursist toegevoegd!");
+                refreshTable();
+            }
+        } catch (SQLException e) {
+            showAlert(ERROR_ALERT, "Database Error", e.getMessage());
+        }
+    }
+
+    @FXML
+    void updateButton(ActionEvent event) {
+        cursist selectedCursist = table.getSelectionModel().getSelectedItem();
+        if (selectedCursist == null) {
+            showAlert(ERROR_ALERT, "Selecteer een cursist", "Selecteer een cursist om te bewerken.");
+            return;
+        }
+        if (!validateFields()) {
+            return;
+        }
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement("UPDATE cursist SET naam=?, geboortedatum=?, geslacht=?, adres=?, woonplaats=?, land=?, emailadres=? WHERE emailadres=?")) {
+            statement.setString(1, naam.getText());
+            statement.setDate(2, java.sql.Date.valueOf(datum.getValue()));
+            statement.setString(3, geslacht.getValue());
+            statement.setString(4, adres.getText());
+            statement.setString(5, woonplaats.getText());
+            statement.setString(6, land.getText());
+            statement.setString(7, emailadres.getText());
+            statement.setString(8, selectedCursist.getEmailadres());
+
+            int rowsUpdated = statement.executeUpdate();
+            if (rowsUpdated > 0) {
+                showAlert(INFO_ALERT, "Success", "Cursist bijgewerkt!");
+                refreshTable();
+            }
+        } catch (SQLException e) {
+            showAlert(ERROR_ALERT, "Database Error", e.getMessage());
+        }
+    }
+
+    @FXML
+    void deleteButton(ActionEvent event) {
+        cursist selectedCursist = table.getSelectionModel().getSelectedItem();
+        if (selectedCursist == null) {
+            showAlert(ERROR_ALERT, "Selecteer een cursist", "Selecteer een cursist om te verwijderen.");
+            return;
+        }
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement("DELETE FROM cursist WHERE emailadres=?")) {
+            statement.setString(1, selectedCursist.getEmailadres());
+
+            int rowsDeleted = statement.executeUpdate();
+            if (rowsDeleted > 0) {
+                showAlert(INFO_ALERT, "Success", "Cursist verwijderd!");
+                refreshTable();
+            }
+        } catch (SQLException e) {
+            showAlert(ERROR_ALERT, "Database Error", e.getMessage());
+        }
+    }
+
+    private boolean validateFields() {
+        String emailValidatie = "^"
+        if (naam.getText().isEmpty() || datum.getValue() == null || geslacht.getValue() == null
+                || adres.getText().isEmpty() || woonplaats.getText().isEmpty()
+                || land.getText().isEmpty() || emailadres.getText().isEmpty()) {
+            showAlert(ERROR_ALERT, "Validation Error", "Alle velden moeten worden ingevuld!");
+            return false;
+        }
+        return true;
+    }
+
+    private void showAlert(Alert.AlertType alertType, String title, String content) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    
+
+    @FXML //Sluit de huidige stage en gaat terug naar de main menu
     private void goToMainMenuKnop(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/codecademy/MainMenu.fxml"));
-            Parent root = loader.load();
-
-            Scene scene= new Scene(root);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.show();
-            
-            Stage currenStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            currenStage.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage secondStage = new Stage();
+        secondStage.setTitle("Jamal Mitwally-2221071 Colin Valster-2174591");
+        secondStage.setScene(scene);
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        currentStage.close();
+        secondStage.setResizable(false);
+        secondStage.show();
+    } 
+    catch (IOException e) {
+        e.printStackTrace();
     }
-
-    @FXML
-    private void initialize() {
-        geslachtChoiceBox.getItems().addAll("Man", "Vrouw", "Anders");
-        geslachtChoiceBox.setValue("Man");
-        naamColumn.setCellValueFactory(cellData -> cellData.getValue().naamProperty());
-        geboorteDatumColumn.setCellValueFactory(cellData -> cellData.getValue().geboorteDatumProperty());
-        geslachtColumn.setCellValueFactory(cellData -> cellData.getValue().geslachtProperty());
-        adresColumn.setCellValueFactory(cellData -> cellData.getValue().adresProperty());
-        woonplaatsColumn.setCellValueFactory(cellData -> cellData.getValue().woonplaatsProperty());
-        landColumn.setCellValueFactory(cellData -> cellData.getValue().landProperty());
-        emailadresColumn.setCellValueFactory(cellData -> cellData.getValue().emailadresProperty());
-
-        loadData();
-    }
-
-    @FXML
-    private void loadData() {
-        table.getItems().clear(); 
-        try (Connection connection = DriverManager.getConnection(JDBC_URL)) {
-            String query = "SELECT * FROM Codecademy.dbo.Cursisten"; 
-            try (Statement statement = connection.createStatement();
-                 ResultSet resultSet = statement.executeQuery(query)) {
-                while (resultSet.next()) {
-                    cursist newCursist = new cursist(
-                            resultSet.getString("naam"),
-                            resultSet.getDate("geboortedatum").toLocalDate(),
-                            resultSet.getString("geslacht"),
-                            resultSet.getString("adres"),
-                            resultSet.getString("woonplaats"),
-                            resultSet.getString("land"),
-                            resultSet.getString("emailadres")
-                    );
-                    table.getItems().add(newCursist);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    public void addButton() {
-        String naam = naamTextField.getText();
-        LocalDate geboorteDatum = geboorteDatumPicker.getValue();
-        String geslacht = geslachtChoiceBox.getValue();
-        String adres = adresTextField.getText();
-        String woonplaats = woonplaatsTextField.getText();
-        String land = landTextField.getText();
-        String emailadres = emailadresTextField.getText();
-
-        String emailValidatie = "^[A-Za-z]+@[A-Za-z]+\\.[A-Za-z]+$";
-        if (!emailadres.matches(emailValidatie)) {
-            warning.setText("Please enter a valid e-mailadress");
-            return;
-        }
-        if (naam == null || naam.trim().isEmpty() || geboorteDatum == null || geslacht == null || geslacht.trim().isEmpty() || adres == null || adres.trim().isEmpty() || woonplaats == null || woonplaats.trim().isEmpty() || land == null || land.trim().isEmpty() || emailadres == null || emailadres.trim().isEmpty()) {
-            warning.setText("Please fill in all fields.");
-            return;
-        }
-
-        try (Connection connection = DriverManager.getConnection(JDBC_URL)) {
-            String insertQuery = "INSERT INTO Codecademy.dbo.Cursisten (naam, geboortedatum, geslacht, adres, woonplaats, land, emailadres) VALUES (?, ?, ?, ?, ?, ?, ?)";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
-                preparedStatement.setString(1, naam);
-                preparedStatement.setDate(2, Date.valueOf(geboorteDatum));
-                preparedStatement.setString(3, geslacht);
-                preparedStatement.setString(4, adres);
-                preparedStatement.setString(5, woonplaats);
-                preparedStatement.setString(6, land);
-                preparedStatement.setString(7, emailadres);
-                preparedStatement.executeUpdate();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        clearFields();
-        loadData();
-        warning.setText("");
-    }
-
-    @FXML
-    public void updateButton() {
-        cursist selectedCursist = table.getSelectionModel().getSelectedItem();
-        if (selectedCursist != null) {
-            String updatedNaam = naamTextField.getText();
-            LocalDate updatedGeboorteDatum = geboorteDatumPicker.getValue();
-            String updatedGeslacht = geslachtChoiceBox.getValue();
-            String updatedAdres = adresTextField.getText();
-            String updatedWoonplaats = woonplaatsTextField.getText();
-            String updatedLand = landTextField.getText();
-            String updatedEmailadres = emailadresTextField.getText();
-
-        String emailValidatie = "^[A-Za-z]+@[A-Za-z]+\\.[A-Za-z]+$";
-        if (!updatedEmailadres.matches(emailValidatie)) {
-            warning.setText("Please enter a valid e-mailadress");
-            return;
-        }
-
-        if (updatedNaam == null || updatedNaam.trim().isEmpty() || updatedGeboorteDatum == null || updatedGeslacht == null || updatedGeslacht.trim().isEmpty() || updatedAdres == null || updatedAdres.trim().isEmpty() || updatedWoonplaats == null || updatedWoonplaats.trim().isEmpty() || updatedLand == null || updatedLand.trim().isEmpty() || updatedEmailadres == null || updatedEmailadres.trim().isEmpty()) {
-            warning.setText("Please fill in all fields.");
-            return;
-        }
-
-            try (Connection connection = DriverManager.getConnection(JDBC_URL)) {
-                String updateQuery = "UPDATE Codecademy.dbo.Cursisten SET naam=?, geboortedatum=?, geslacht=?, adres=?, woonplaats=?, land=?, emailadres=? WHERE naam=?";
-                try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
-                    preparedStatement.setString(1, updatedNaam);
-                    preparedStatement.setDate(2, Date.valueOf(updatedGeboorteDatum));
-                    preparedStatement.setString(3, updatedGeslacht);
-                    preparedStatement.setString(4, updatedAdres);
-                    preparedStatement.setString(5, updatedWoonplaats);
-                    preparedStatement.setString(6, updatedLand);
-                    preparedStatement.setString(7, updatedEmailadres);
-                    preparedStatement.setString(8, selectedCursist.getNaam());
-                    preparedStatement.executeUpdate();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            warning.setText("Please fill in all fields");
-        }
-
-        clearFields();
-        loadData();
-        warning.setText("");
-    }
-}
-
-
-    @FXML
-    public void deleteButton() {
-        cursist selectedCursist = table.getSelectionModel().getSelectedItem();
-        if (selectedCursist != null) {
-            try (Connection connection = DriverManager.getConnection(JDBC_URL)) {
-                String deleteQuery = "DELETE FROM Codecademy.dbo.Cursisten WHERE naam=?";
-                try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
-                    preparedStatement.setString(1, selectedCursist.getNaam());
-                    preparedStatement.executeUpdate();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-            loadData();
-        }
-    }
-
-    private void clearFields() {
-        naamTextField.clear();
-        geboorteDatumPicker.setValue(null);
-        geslachtChoiceBox.setValue("Man");
-        adresTextField.clear();
-        woonplaatsTextField.clear();
-        landTextField.clear();
-        emailadresTextField.clear();
     }
 }
