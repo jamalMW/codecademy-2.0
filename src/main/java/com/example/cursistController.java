@@ -158,6 +158,7 @@ public class cursistController {
         }
     }
 
+
     @FXML
     void updateButton(ActionEvent event) {
         cursist selectedCursist = table.getSelectionModel().getSelectedItem();
