@@ -4,7 +4,7 @@ Wij hebben de database helemaal leeggehaald en vervangen met onze eigen data (ta
 
 USE [master]
 GO
-/****** Object:  Database [CodeCademyGroepB3]    Script Date: 29/03/2024 12:32:03 ******/
+/****** Object:  Database [CodeCademyGroepB3]    Script Date: 29/03/2024 23:35:05 ******/
 CREATE DATABASE [CodeCademyGroepB3]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -88,7 +88,7 @@ ALTER DATABASE [CodeCademyGroepB3] SET QUERY_STORE (OPERATION_MODE = READ_WRITE,
 GO
 USE [CodeCademyGroepB3]
 GO
-/****** Object:  Table [dbo].[Content]    Script Date: 29/03/2024 12:32:03 ******/
+/****** Object:  Table [dbo].[Content]    Script Date: 29/03/2024 23:35:06 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -106,7 +106,7 @@ CREATE TABLE [dbo].[Content](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Cursist]    Script Date: 29/03/2024 12:32:03 ******/
+/****** Object:  Table [dbo].[Cursist]    Script Date: 29/03/2024 23:35:06 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -127,7 +127,7 @@ CREATE TABLE [dbo].[Cursist](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Cursus]    Script Date: 29/03/2024 12:32:03 ******/
+/****** Object:  Table [dbo].[Cursus]    Script Date: 29/03/2024 23:35:06 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -143,13 +143,13 @@ CREATE TABLE [dbo].[Cursus](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Inschrijving]    Script Date: 29/03/2024 12:32:03 ******/
+/****** Object:  Table [dbo].[Inschrijving]    Script Date: 29/03/2024 23:35:06 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Inschrijving](
-	[inschrijvingID] [int] NOT NULL,
+	[inschrijvingID] [int] IDENTITY(1,1) NOT NULL,
 	[naamCursus] [nvarchar](255) NULL,
 	[datum] [date] NULL,
 	[emailadres] [nvarchar](255) NULL,
@@ -159,7 +159,7 @@ CREATE TABLE [dbo].[Inschrijving](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Module]    Script Date: 29/03/2024 12:32:03 ******/
+/****** Object:  Table [dbo].[Module]    Script Date: 29/03/2024 23:35:06 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -171,13 +171,15 @@ CREATE TABLE [dbo].[Module](
 	[naamContactPersoon] [nvarchar](max) NULL,
 	[emailContactPersoon] [nvarchar](max) NULL,
 	[volgNummer] [int] NULL,
+	[status] [nvarchar](max) NULL,
+	[beschrijving] [nvarchar](max) NULL,
  CONSTRAINT [PK_Module_1] PRIMARY KEY CLUSTERED 
 (
 	[contentID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Voortgang]    Script Date: 29/03/2024 12:32:03 ******/
+/****** Object:  Table [dbo].[Voortgang]    Script Date: 29/03/2024 23:35:06 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -194,7 +196,7 @@ CREATE TABLE [dbo].[Voortgang](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Webcast]    Script Date: 29/03/2024 12:32:03 ******/
+/****** Object:  Table [dbo].[Webcast]    Script Date: 29/03/2024 23:35:06 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -208,11 +210,78 @@ CREATE TABLE [dbo].[Webcast](
 	[naamSpreker] [nvarchar](max) NULL,
 	[organisatieSpreker] [nvarchar](max) NULL,
 	[views] [int] NULL,
+	[status] [nvarchar](max) NULL,
  CONSTRAINT [PK_Webcast_1] PRIMARY KEY CLUSTERED 
 (
 	[contentID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+INSERT [dbo].[Content] ([contentID], [naamCursus], [datum], [titel], [beschrijving], [status]) VALUES (1, N'Programmeren 2', CAST(N'2023-10-21' AS Date), N'Opdracht Codecademy', N'Hier leer je over de Codecademy groepsopdracht', N'actief')
+GO
+INSERT [dbo].[Content] ([contentID], [naamCursus], [datum], [titel], [beschrijving], [status]) VALUES (2, N'Duurzame Ontwikkeling', CAST(N'2023-10-21' AS Date), N' Duurzaamheid Webcast', N'Deze webcast gaat over Duurzaamheid in de IT sector', N'concept')
+GO
+INSERT [dbo].[Content] ([contentID], [naamCursus], [datum], [titel], [beschrijving], [status]) VALUES (3, N'Relationele Databases 1', CAST(N'2023-08-19' AS Date), N'SSMS', N'Hier leer je hoe je gebruik kan maken van SQL Server Management Studio', N'gearchiveerd')
+GO
+INSERT [dbo].[Content] ([contentID], [naamCursus], [datum], [titel], [beschrijving], [status]) VALUES (4, N'Programmeren 2', CAST(N'2023-10-21' AS Date), N'Codecademy Webcast', N'Hier leer je hoe je je codecademy project opstart', N'actief')
+GO
+INSERT [dbo].[Content] ([contentID], [naamCursus], [datum], [titel], [beschrijving], [status]) VALUES (5, N'Programmeren 2', CAST(N'2023-10-21' AS Date), N'Programmeren Tentamen Voorbereiding Webcast', N'Deze webcast dient als hulp bij het voorbereiden voor het tentamen', N'gearchiveerd')
+GO
+INSERT [dbo].[Content] ([contentID], [naamCursus], [datum], [titel], [beschrijving], [status]) VALUES (6, N'Relationele Databases 1', CAST(N'2023-10-21' AS Date), N'Databases Tentamen Voorbereiding Webcast', N'Deze webcast dient als hulp bij het voorbereiden voor het tentamen', N'gearchiveerd')
+GO
+INSERT [dbo].[Content] ([contentID], [naamCursus], [datum], [titel], [beschrijving], [status]) VALUES (7, N'Duurzame Ontwikkeling', CAST(N'2023-10-21' AS Date), N'Duurzaamheid Tentamen Voorbereiding Webcast', N'Deze webcast dient als hulp bij het voorbereiden voor het tentamen', N'gearchiveerd')
+GO
+INSERT [dbo].[Cursist] ([emailadres], [geboortedatum], [adres], [naam], [woonplaats], [land], [geslacht], [postcode], [huisnummer]) VALUES (N'bashuis@hotmail.nl', CAST(N'2003-04-19' AS Date), N'huisstraat', N'bas huis', N'amsterdam', N'nederland', N'man', N'3310 PO', N'112')
+GO
+INSERT [dbo].[Cursist] ([emailadres], [geboortedatum], [adres], [naam], [woonplaats], [land], [geslacht], [postcode], [huisnummer]) VALUES (N'kevinavans@avans.nl', CAST(N'2004-01-01' AS Date), N'oswijk', N'kevin avans', N'breda', N'nederland', N'man', N'3311 IO', N'118')
+GO
+INSERT [dbo].[Cursist] ([emailadres], [geboortedatum], [adres], [naam], [woonplaats], [land], [geslacht], [postcode], [huisnummer]) VALUES (N'ot.denbeste@gmail.com', CAST(N'2000-02-10' AS Date), N'hoekstraat', N'Ottelien den Beste', N'breda', N'Nederland', N'Vrouw', N'1111 PO', N'12')
+GO
+INSERT [dbo].[Cursist] ([emailadres], [geboortedatum], [adres], [naam], [woonplaats], [land], [geslacht], [postcode], [huisnummer]) VALUES (N'wa.vanburen@gmail.com', CAST(N'1968-02-28' AS Date), N'buurstraat', N'W.A. van Buren', N'breda', N'Nederland', N'Man', N'1122 BU', N'120')
+GO
+INSERT [dbo].[Cursus] ([naamCursus], [onderwerp], [introTekst], [niveau]) VALUES (N'Duurzame Ontwikkeling', N'Smart cities', N'In deze cursus behandelen wij maatschappelijke problemen zoals Smart cities', N'expert')
+GO
+INSERT [dbo].[Cursus] ([naamCursus], [onderwerp], [introTekst], [niveau]) VALUES (N'Programmeren 2', N'Java', N'In deze cursus behandelen wij vooral Java voor de eindopdraht Codecademy', N'gevorderd')
+GO
+INSERT [dbo].[Cursus] ([naamCursus], [onderwerp], [introTekst], [niveau]) VALUES (N'Relationele Databases 1', N'Databases beheren', N'In deze cursus leer je hoe je een database beheert en onderhoudt', N'expert')
+GO
+SET IDENTITY_INSERT [dbo].[Inschrijving] ON 
+GO
+INSERT [dbo].[Inschrijving] ([inschrijvingID], [naamCursus], [datum], [emailadres]) VALUES (1, N'Programmeren 2', CAST(N'2023-06-12' AS Date), N'bashuis@hotmail.nl')
+GO
+INSERT [dbo].[Inschrijving] ([inschrijvingID], [naamCursus], [datum], [emailadres]) VALUES (3, N'Relationele Databases 1', CAST(N'2023-06-13' AS Date), N'bashuis@hotmail.nl')
+GO
+INSERT [dbo].[Inschrijving] ([inschrijvingID], [naamCursus], [datum], [emailadres]) VALUES (5, N'Duurzame Ontwikkeling', CAST(N'2024-02-26' AS Date), N'bashuis@hotmail.nl')
+GO
+INSERT [dbo].[Inschrijving] ([inschrijvingID], [naamCursus], [datum], [emailadres]) VALUES (12, NULL, CAST(N'2024-02-26' AS Date), N'bashuis@hotmail.nl')
+GO
+INSERT [dbo].[Inschrijving] ([inschrijvingID], [naamCursus], [datum], [emailadres]) VALUES (14, N'Relationele Databases 1', CAST(N'2019-06-06' AS Date), N'ot.denbeste@gmail.com')
+GO
+INSERT [dbo].[Inschrijving] ([inschrijvingID], [naamCursus], [datum], [emailadres]) VALUES (15, N'Relationele Databases 1', CAST(N'2020-07-07' AS Date), N'ot.denbeste@gmail.com')
+GO
+INSERT [dbo].[Inschrijving] ([inschrijvingID], [naamCursus], [datum], [emailadres]) VALUES (16, N'Programmeren 2', CAST(N'2024-11-21' AS Date), N'wa.vanburen@gmail.com')
+GO
+SET IDENTITY_INSERT [dbo].[Inschrijving] OFF
+GO
+INSERT [dbo].[Module] ([contentID], [titel], [versie], [naamContactPersoon], [emailContactPersoon], [volgNummer], [status], [beschrijving]) VALUES (1, N'Opdracht Codecademy', 1, N'Kevin Lam', N'kevinlam@avans.nl', 1, N'actief', N'Hier leer je over de Codecademy groepsopdracht')
+GO
+INSERT [dbo].[Module] ([contentID], [titel], [versie], [naamContactPersoon], [emailContactPersoon], [volgNummer], [status], [beschrijving]) VALUES (3, N'SSMS', 1, N'Jan Avans', N'janavans@avans.nl', 2, N'gearchiveerd', N'Hier leer je hoe je gebruik kan maken van SQL Server Management Studio')
+GO
+INSERT [dbo].[Voortgang] ([emailadres], [naamCursus], [contentID], [voortgangPercentage]) VALUES (N'bashuis@hotmail.nl', N'Programmeren 2', 1, CAST(70.00 AS Decimal(5, 2)))
+GO
+INSERT [dbo].[Voortgang] ([emailadres], [naamCursus], [contentID], [voortgangPercentage]) VALUES (N'bashuis@hotmail.nl', N'Duurzame Ontwikkeling', 2, CAST(30.00 AS Decimal(5, 2)))
+GO
+INSERT [dbo].[Voortgang] ([emailadres], [naamCursus], [contentID], [voortgangPercentage]) VALUES (N'bashuis@hotmail.nl', N'Relationele Databases 1', 3, CAST(100.00 AS Decimal(5, 2)))
+GO
+INSERT [dbo].[Webcast] ([contentID], [titel], [tijdsDuur], [datumPublicatie], [URL], [naamSpreker], [organisatieSpreker], [views], [status]) VALUES (2, N'Duurzaamheid Webcast', 150, CAST(N'2023-10-21' AS Date), N'avans.nl/duurzaam/webcast', N'Jan Vertonghen', N'Avans', 700, N'concept')
+GO
+INSERT [dbo].[Webcast] ([contentID], [titel], [tijdsDuur], [datumPublicatie], [URL], [naamSpreker], [organisatieSpreker], [views], [status]) VALUES (4, N'Codecademy Webcast', 80, CAST(N'2023-10-21' AS Date), N'avans.nl/programmeren2/webcastcodecademy', N'Kevin-Jan', N'Avans', 1200, N'actief')
+GO
+INSERT [dbo].[Webcast] ([contentID], [titel], [tijdsDuur], [datumPublicatie], [URL], [naamSpreker], [organisatieSpreker], [views], [status]) VALUES (5, N'Programmeren Tentamen Voorbereiding Webcast', 110, CAST(N'2023-10-21' AS Date), N'avans.nl/programmeren2/webcastprogrammeren', N'Marjolein Gerdes', N'Avans', 1900, N'gearchiveerd')
+GO
+INSERT [dbo].[Webcast] ([contentID], [titel], [tijdsDuur], [datumPublicatie], [URL], [naamSpreker], [organisatieSpreker], [views], [status]) VALUES (6, N'Databases Tentamen Voorbereiding Webcast', 160, CAST(N'2023-10-21' AS Date), N'avans.nl/programmeren2/webcastdatabases', N'Erik Kuipers', N'Avans', 1500, N'gearchiveerd')
+GO
+INSERT [dbo].[Webcast] ([contentID], [titel], [tijdsDuur], [datumPublicatie], [URL], [naamSpreker], [organisatieSpreker], [views], [status]) VALUES (7, N'Duurzaamheid Tentamen Voorbereiding Webcast', 200, CAST(N'2023-10-21' AS Date), N'avans.nl/programmeren2/webcastduurzaamheid', N'Jan Duurzaam', N'Avans', 900, N'gearchiveerd')
 GO
 ALTER TABLE [dbo].[Content]  WITH CHECK ADD  CONSTRAINT [FK_Content_Cursus] FOREIGN KEY([naamCursus])
 REFERENCES [dbo].[Cursus] ([naamCursus])
