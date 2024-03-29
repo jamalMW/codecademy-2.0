@@ -1,0 +1,5 @@
+Het doel van het databaseontwerp dat we hebben opgeleverd, is om de database te voorzien van zo min mogelijk redundantie. Dit hebben we bereikt door de database zo goed mogelijk op te zetten in de derde normaalvorm.
+Om dit mogelijk te maken, hebben we de gegevens zoveel mogelijk opgesplitst, zodat er zo min mogelijk afhankelijkheden zijn tussen de tabellen. 
+Elk tabel heeft hierdoor slechts één doel. We hebben de ERD daarom zoveel mogelijk afgeleid van het databaseontwerp. De ERD en het databaseontwerp komen daarom sterk overeen.
+We hebben hiervoor foreign keys gebruikt. Als je het databaseontwerp bekijkt, zie je dat de tabellen zo goed mogelijk zijn opgesplitst zonder te veel/onnodige tabellen te maken. 
+Bijvoorbeeld, de tabellen 'cursus' en 'cursist' zijn opgesplitst in twee tabellen, zodat ze functioneel onafhankelijk zijn van elkaar.
