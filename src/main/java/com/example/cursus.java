@@ -1,9 +1,9 @@
 package com.example;
 public class cursus {
-    private String cursus;
-    private String onderwerp;
-    private String intro;
-    private String niveau;
+    private final String cursus;
+    private final String onderwerp;
+    private final String intro;
+    private final String niveau;
 
     public cursus(String cursus, String onderwerp, String intro, String niveau) {
         this.cursus = cursus;

@@ -3,15 +3,15 @@ package com.example;
 import java.time.LocalDate;
 
 public class cursist {
-    private String naam;
-    private String geslacht;
-    private String adres;
-    private String woonplaats;
-    private String land;
-    private String emailadres;
-    private LocalDate geboorteDatum;
-    private String postcode;
-    private Integer huisnummer;
+    private final String naam;
+    private final String geslacht;
+    private final String adres;
+    private final String woonplaats;
+    private final String land;
+    private final String emailadres;
+    private final LocalDate geboorteDatum;
+    private final String postcode;
+    private final Integer huisnummer;
 
     public cursist(String naam, LocalDate geboorteDatum, String geslacht, String adres, String woonplaats, String land, String emailadres, String postcode, Integer huisnummer) {
 

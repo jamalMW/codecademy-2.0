@@ -11,7 +11,7 @@ import java.sql.*;
 public class contentController {
 
     TableView<ObservableList<String>> webcastTableView;
-    private TableView<ObservableList<String>> moduleTableView;
+    private final TableView<ObservableList<String>> moduleTableView;
 
     // JDBC URL and credentials
     private static final String JDBC_URL = "jdbc:sqlserver://aei-sql2.avans.nl:1443;databaseName=CodeCademyGroepB3;encrypt=false;trustServerCertificate=true;";
