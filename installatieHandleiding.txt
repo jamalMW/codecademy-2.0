@@ -1,0 +1,4 @@
+Handleiding: open de link repository( https://github.com/jamalMW/codecademy-2.0 ) druk 
+vervolgens op de groene knop <> Code. En download de zip. Extract de zip vervolgens naar 
+locatie naat keuze. Open je favoriete IDE en open de folder: src/main / java / app.java. de 
+app.java bestand is de Main bestand van het project.
