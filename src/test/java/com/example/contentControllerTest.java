@@ -1,50 +1,67 @@
 package com.example;
 
+import javafx.collections.ObservableList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.ResultSetMetaData;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-public class ContentControllerTest {
+public class contentControllerTest {
 
-    private ContentController contentController;
+    private contentController contentController;
+
+    @Mock
+    private Connection mockConnection;
+
+    @Mock
+    private PreparedStatement mockStatement;
+
+    @Mock
+    private ResultSet mockResultSet;
 
     @BeforeEach
     void setUp() {
-        contentController = new ContentController();
+        MockitoAnnotations.openMocks(this);
+        contentController = new contentController(null, null);
     }
 
     @Test
-    void testPopulateWebcastTable() throws SQLException {
-        Connection connection = Mockito.mock(Connection.class);
-        PreparedStatement statement = Mockito.mock(PreparedStatement.class);
-        ResultSet resultSet = Mockito.mock(ResultSet.class);
-        String sql = "SELECT * FROM Webcast";
-        String[] expectedColumnNames = {"Column1", "Column2"}; 
+    void testPopulateWebcastTable() throws Exception {
+        // Prepare expected column names
+        String[] expectedColumnNames = {"Column1", "Column2"};
 
-        Mockito.when(connection.prepareStatement(sql)).thenReturn(statement);
-        Mockito.when(statement.executeQuery()).thenReturn(resultSet);
-        Mockito.when(resultSet.next()).thenReturn(true).thenReturn(false);
-        Mockito.when(resultSet.getMetaData().getColumnCount()).thenReturn(expectedColumnNames.length);
-        Mockito.when(resultSet.getMetaData().getColumnName(Mockito.anyInt())).thenAnswer(invocation -> {
-            int index = invocation.getArgument(0);
-            return expectedColumnNames[index - 1];
-        });
-        Mockito.when(resultSet.getString(Mockito.anyInt())).thenReturn("SampleValue");
+        // Mock behavior for connection, statement, and result set
+        when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
+        when(mockStatement.executeQuery()).thenReturn(mockResultSet);
+        when(mockResultSet.next()).thenReturn(true).thenReturn(false);
 
-        contentController.populateWebcastTable(connection);
+        ResultSetMetaData metaData = mock(ResultSetMetaData.class);
+        when(metaData.getColumnCount()).thenReturn(expectedColumnNames.length);
+        for (int i = 0; i < expectedColumnNames.length; i++) {
+            when(metaData.getColumnName(i + 1)).thenReturn(expectedColumnNames[i]);
+        }
+        when(mockResultSet.getMetaData()).thenReturn(metaData);
 
+        when(mockResultSet.getString(anyInt())).thenReturn("SampleValue");
 
+        // Set mock connection in contentController
+        contentController.setConnection(mockConnection);
+
+        // Call the method under test
+        contentController.populateWebcastTable();
+
+        // Assertions
         assertEquals(expectedColumnNames.length, contentController.webcastTableView.getColumns().size());
         assertEquals(1, contentController.webcastTableView.getItems().size());
     }
-
-
 }

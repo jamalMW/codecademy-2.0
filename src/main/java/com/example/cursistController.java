@@ -27,42 +27,33 @@ import javafx.stage.Stage;
 
 public class cursistController {
 
-    @FXML
-    private TextField adres;
+    @FXML TextField adres;
     @FXML
     private TableColumn<cursist, String> adresColumn;
-    @FXML
-    private DatePicker datum;
-    @FXML
-    private TextField emailadres;
+    @FXML DatePicker datum;
+    @FXML TextField emailadres;
     @FXML
     private TableColumn<cursist, String> emailadresColumn;
     @FXML
     private TableColumn<cursist, LocalDate> geboorteDatumColumn;
-    @FXML
-    private ChoiceBox<String> geslacht;
+    @FXML ChoiceBox<String> geslacht;
     @FXML
     private TableColumn<cursist, String> geslachtColumn;
-    @FXML
-    private TextField huisnummer;
+    @FXML TextField huisnummer;
     @FXML
     private TableColumn<cursist, Integer> huisnummerColumn;
-    @FXML
-    private TextField land;
+    @FXML TextField land;
     @FXML
     private TableColumn<cursist, String> landColumn;
-    @FXML
-    private TextField naam;
+    @FXML TextField naam;
     @FXML
     private TableColumn<cursist, String> naamColumn;
-    @FXML
-    private TextField postcode;
+    @FXML TextField postcode;
     @FXML
     private TableColumn<cursist, String> postcodeColumn;
     @FXML
     private TableView<cursist> table;
-    @FXML
-    private TextField woonplaats;
+    @FXML TextField woonplaats;
     @FXML
     private TableColumn<cursist, String> woonplaatsColumn;
     //Inloginformatie voor db connectie
@@ -219,7 +210,7 @@ public class cursistController {
         }
     }
     //kijkt of de velden leeg zijn, deze klasse wordt gecalled voor een update of add
-    private boolean validateFields() {
+    boolean validateFields() {
         if (naam.getText().isEmpty() || datum.getValue() == null || geslacht.getValue() == null
                 || adres.getText().isEmpty() || woonplaats.getText().isEmpty()
                 || land.getText().isEmpty() || emailadres.getText().isEmpty() || postcode.getText().isEmpty() || huisnummer.getText().isEmpty()) {
